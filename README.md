@@ -32,11 +32,18 @@ O projeto segue o padrão de responsabilidades separadas para garantir a manuten
 *   Config: Classes de configuração de segurança e inicialização do sistema.
 
 ## Como Executar
-1. Certifique-se de ter o Java 21 e o PostgreSQL instalados.
+1. Certifique-se de ter um JDK instalado, não apenas uma JRE. O projeto compila com Java 17 e também pode ser executado com Java 21, desde que o IntelliJ/Maven estejam apontando para um JDK válido.
 2. Clone o repositório.
 3. Ajuste as credenciais do banco de dados no arquivo application.properties.
 4. Execute a aplicação via IDE (como IntelliJ) ou terminal usando `./mvnw spring-boot:run`.
 5. Ao iniciar pela primeira vez, o sistema criará automaticamente um usuário administrador inicial (admin / admin123).
+
+### Se aparecer "No compiler is provided in this environment"
+Esse erro indica que o IntelliJ ou o Maven estão usando uma JRE em vez de um JDK.
+
+1. Em `Project Structure`, selecione um JDK 17 ou 21 em `Project SDK`.
+2. Em `Settings > Build, Execution, Deployment > Build Tools > Maven > Runner`, aponte o `JRE` para o mesmo JDK.
+3. Reimporte o projeto Maven e execute novamente.
 
 ## Créditos
 Projeto desenvolvido em contexto acadêmico na FATEC Jales, sob a orientação do Professor James Campos, visando a formação em desenvolvimento multiplataforma e engenharia de software.

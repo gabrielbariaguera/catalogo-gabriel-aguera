@@ -28,27 +28,30 @@ public class ProdutoModel implements Serializable {
     @Positive(message = "O valor deve ser um número positivo.")
     private BigDecimal valor;
 
+    @NotNull(message = "A quantidade é obrigatória.")
+    @Column(nullable = false)
+    private Integer quantidade;
+
     @NotNull(message = "A categoria é obrigatória")
     @ManyToOne
     @JoinColumn(name = "id_categoria_fk")
     private CategoriaModel categoria;
 
-    //Resolve o Desafio 3
-    @Column(name="data_atualizacao")
-    private LocalDateTime dataCadastro;
+    @Column(name = "data_atualizacao", nullable = false)
+    private LocalDateTime dataAtualizacao;
 
     @PrePersist
-    protected void onCreate() {
-        this.dataCadastro = LocalDateTime.now();
+    @PreUpdate
+    protected void atualizarData() {
+        this.dataAtualizacao = LocalDateTime.now();
     }
 
-    // Getter e Setter para dataCadastro
-    public LocalDateTime getDataCadastro() {
-        return dataCadastro;
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
     }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
-        this.dataCadastro = dataCadastro;
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
     }
 
     // Construtores, Getters e Setters
@@ -77,6 +80,14 @@ public class ProdutoModel implements Serializable {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 
     public CategoriaModel getCategoria() {
