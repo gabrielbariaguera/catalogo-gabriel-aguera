@@ -8,6 +8,8 @@ import br.com.fatec.catalogo.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
@@ -58,14 +60,22 @@ public class ProdutoService {
 
         ProdutoModel salvo = repository.save(produto);
         ProdutoOperacaoTipo tipoAlteracao = novoProduto ? ProdutoOperacaoTipo.CREATE : ProdutoOperacaoTipo.UPDATE;
-        auditoriaRepository.save(ProdutoAuditoriaModel.fromProduto(salvo, tipoAlteracao));
+        auditoriaRepository.save(ProdutoAuditoriaModel.fromProduto(salvo, tipoAlteracao, obterUsuarioAtual()));
         return salvo;
     }
 
     @Transactional
     public void excluir(long id) {
         ProdutoModel produto = buscarPorId(id);
-        auditoriaRepository.save(ProdutoAuditoriaModel.fromProduto(produto, ProdutoOperacaoTipo.DELETE));
+        auditoriaRepository.save(ProdutoAuditoriaModel.fromProduto(produto, ProdutoOperacaoTipo.DELETE, obterUsuarioAtual()));
         repository.delete(produto);
+    }
+
+    private String obterUsuarioAtual() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) return null;
+        String name = auth.getName();
+        if (name == null || "anonymousUser".equals(name)) return null;
+        return name;
     }
 }

@@ -49,13 +49,17 @@ public class ProdutoAuditoriaModel implements Serializable {
     @Column(name = "data_operacao", nullable = false)
     private LocalDateTime dataOperacao;
 
-    public static ProdutoAuditoriaModel fromProduto(ProdutoModel produto, ProdutoOperacaoTipo tipoAlteracao) {
+    @Column(length = 100)
+    private String autor;
+
+    public static ProdutoAuditoriaModel fromProduto(ProdutoModel produto, ProdutoOperacaoTipo tipoAlteracao, String autor) {
         ProdutoAuditoriaModel auditoria = new ProdutoAuditoriaModel();
         auditoria.setIdProdutoOriginal(produto.getIdProduto());
         auditoria.setNome(produto.getNome());
         auditoria.setValor(produto.getValor());
         auditoria.setQuantidade(produto.getQuantidade());
         auditoria.setTipoAlteracao(tipoAlteracao);
+        auditoria.setAutor(autor);
 
         if (produto.getCategoria() != null) {
             auditoria.setCategoriaId(produto.getCategoria().getIdCategoria());
@@ -140,5 +144,13 @@ public class ProdutoAuditoriaModel implements Serializable {
 
     public void setDataOperacao(LocalDateTime dataOperacao) {
         this.dataOperacao = dataOperacao;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
     }
 }

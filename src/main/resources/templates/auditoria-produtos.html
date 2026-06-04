@@ -38,6 +38,7 @@
                     <th>ID Produto</th>
                     <th>Nome</th>
                     <th>Categoria</th>
+                    <th>Autor</th>
                     <th>Tipo</th>
                     <th>Preço (R$)</th>
                     <th>Estoque</th>
@@ -50,6 +51,7 @@
                     <td th:text="${a.idProdutoOriginal}"></td>
                     <td th:text="${a.nome}"></td>
                     <td th:text="${a.categoriaNome != null ? a.categoriaNome : 'Sem Categoria'}"></td>
+                    <td th:text="${a.autor != null ? a.autor : '-'}"></td>
                     <td>
                         <span class="badge"
                               th:classappend="${a.tipoAlteracao.name() == 'CREATE'} ? ' bg-success' : (${a.tipoAlteracao.name() == 'UPDATE'} ? ' bg-primary' : ' bg-danger')"
